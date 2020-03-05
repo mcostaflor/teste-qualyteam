@@ -1,39 +1,67 @@
 import React, { useEffect, useState } from 'react';
-import Axios from 'axios';
-import { Link } from 'react-router-dom';
 
-export default function NonConfirmities() {
+import {
+    Card,
+    CardContent,
+    CardActions,
+    Button,
+    Typography,
+    Chip
+} from '@material-ui/core';
+
+import {
+    nonConformitiesApi
+} from '../../services/api/routes';
+
+export default function NonConfirmities({ history }) {
 
     const [nonConformities, setNonConformities] = useState([]);
 
     useEffect(() => {
-        Axios.get('http://localhost:3000/non-conformities')
-            .then(res => {
-                console.log(res.data);
-                setNonConformities(res.data);
-            });
+
+        async function fetchNonConformities() {
+            setNonConformities(await nonConformitiesApi.getAll());
+        }
+
+        fetchNonConformities();
+
     }, []);
 
     return (
         <>
-        <div>
-            <Link to='/nonconformities/new'>Novo</Link>
-        </div>
+            <Button onClick={() => history.push('/nonconformities/new')} variant='contained' color={'primary'}>
+                Novo
+            </Button>
             {nonConformities.map((item) =>
-                <div key={item.id}>
-                    <div>
-                        id {item.id}
-                    </div>
-                    <div>
-                        {item['ocurrence-date']}
-                    </div>
-                    <div>
-                        {item.description}
-                    </div>
-                    <Link to={`nonconformities/${item.id}`}>
-                        detalhes
-                    </Link>
-                </div>
+                <Card key={item.id} style={{
+                    marginTop: 16
+                }}>
+                    <CardContent>
+                        <Typography variant="h6" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                            <div>
+                                #{item.id}
+                            </div>
+                            <div>
+                                {item['ocurrence-date']}
+                            </div>
+                        </Typography>
+                        <Typography variant="body2" component="p">
+                            {item.description}
+                        </Typography>
+                    </CardContent>
+                    <CardContent>
+                        <div>
+                            {item._departments.length > 0 && item._departments.map(item =>
+                                <Chip key={item.id} label={item.name} style={{ marginRight: 8 }} />
+                            )}
+                        </div>
+                    </CardContent>
+                    <CardActions>
+                        <Button onClick={() => history.push(`nonconformities/${item.id}`)} variant={'outlined'} color="primary">
+                            Ver
+                        </Button>
+                    </CardActions>
+                </Card>
             )}
         </>
     );
