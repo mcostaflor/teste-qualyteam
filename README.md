@@ -1,13 +1,22 @@
-#### Desenvolvido por: Matheus Henrique Costa Flor
+#### Teste-Qualyteam
+##### Matheus Henrique Costa Flor
 
-##### Instalar dependencias
+##### Install dependencies
 
-`npm install` dentro da pasta do projeto
+`npm install` in project's root folder
 
-##### Para executar a aplicação
+##### Configuration
 
-`npm start` dentro da pasta do projeto
+Edit properties in `./src/config/index.js` to change API's URL (default: http://localhost:3000)
 
-##### Para executar os testes
+##### 1. To run the API
 
-`npm test` dentro da pasta do projeto
+Clone and run https://github.com/Qualyteam/front-end-challenge (instructions at the repo's readme)
+
+##### 2. To run the application (previous step required)
+
+`npm start` in project's root folder
+
+##### 3. To run tests
+
+`npm test` in project's root folder
