@@ -5,9 +5,7 @@ import { SnackbarProvider } from 'notistack';
 
 import NonConformitiesCreate from './index';
 
-import axios from 'axios';
-
-jest.mock('axios')
+jest.mock('axios');
 
 afterEach(cleanup);
 
