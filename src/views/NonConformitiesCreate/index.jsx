@@ -87,6 +87,9 @@ export default function NewNonConformity({ history }) {
                                 style={{
                                     marginTop: 18
                                 }}
+                                inputProps={{
+                                    'data-testid': 'new-nonconformity-ocurrence-date'
+                                }}
                             />
                             <TextField
                                 label={'Descrição'}
@@ -99,13 +102,17 @@ export default function NewNonConformity({ history }) {
                                 style={{
                                     marginTop: 18
                                 }}
+                                inputProps={{
+                                    'data-testid': 'new-nonconformity-description'
+                                }}
                             />
                             <FormGroup label={'Departamento(s)'} row>
-                                {departments.map(item =>
+                                {departments.map((item, index) =>
                                     <FormControlLabel
                                         key={item.id}
                                         control={
                                             <Checkbox
+                                                data-testid={`new-nonconformity-checkbox-${index}`}
                                                 checked={item.isChecked || false}
                                                 onChange={e => handleDepartmentCheckbox(e, item.id)}
                                             />
@@ -115,7 +122,12 @@ export default function NewNonConformity({ history }) {
                                 )}
                             </FormGroup>
 
-                            <Button type="submit" variant="contained" color="primary">
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                data-testid={'new-nonconformity-submit'}
+                            >
                                 Enviar
                             </Button>
                         </CardContent>

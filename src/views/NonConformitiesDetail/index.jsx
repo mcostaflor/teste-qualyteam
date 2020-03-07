@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { nonConformitiesApi, correctiveActionsApi } from '../../services/api/routes';
 import { Button, Card, CardContent, Typography, Dialog, DialogTitle, DialogContent, TextField, Chip, DialogActions } from '@material-ui/core';
-import formatDate from 'dateformat';
+import dateFormat from 'dateformat';
 import { useSnackbar } from 'notistack';
 import { isMobile } from 'react-device-detect';
+
+import CorrectiveAction from '../../components/NonConformitiesDetail/CorrectiveAction';
 
 export default function NonConformity({ history, match }) {
 
@@ -16,7 +18,7 @@ export default function NonConformity({ history, match }) {
     const [whyInput, setWhyInput] = useState('');
     const [howInput, setHowInput] = useState('');
     const [whereInput, setWhereInput] = useState('');
-    const [untilInput, setUntilInput] = useState(formatDate(new Date(), 'yyyy-mm-dd'));
+    const [untilInput, setUntilInput] = useState(dateFormat(new Date(), 'yyyy-mm-dd'));
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -49,7 +51,7 @@ export default function NonConformity({ history, match }) {
         setWhyInput('');
         setHowInput('');
         setWhereInput('');
-        setUntilInput(formatDate(new Date(), 'yyyy-mm-dd'));
+        setUntilInput(dateFormat(new Date(), 'yyyy-mm-dd'));
 
     }
 
@@ -87,8 +89,9 @@ export default function NonConformity({ history, match }) {
                 'why-to-do-it': whyInput,
                 'how-to-do-it': howInput,
                 'where-to-do-it': whereInput,
-                'until-when': untilInput
+                'until-when': dateFormat(untilInput + 'T00:00:00', 'dd-mm-yyyy')
             });
+
 
             setNonConformity(await nonConformitiesApi.editOne(nonConformity.id, {
                 ...nonConformity,
@@ -100,7 +103,7 @@ export default function NonConformity({ history, match }) {
             clearForm();
 
         } catch (e) {
-            enqueueSnackbar('Ação não pode ser criada. Tente novamente.', { variant: 'success' });
+            enqueueSnackbar('Ação não pode ser criada. Tente novamente.', { variant: 'error' });
         }
 
     }
@@ -138,48 +141,15 @@ export default function NonConformity({ history, match }) {
             </Button>
             <div>
                 {correctiveActions.map((item, index) =>
-                    <Card key={item.id} style={{ marginTop: 20 }}>
-                        <CardContent>
-                            <Typography>
-                                Ação Corretiva #{index}
-                            </Typography>
-                            <br />
-                            <Typography variant={'caption'}>
-                                O que fazer
-                            </Typography>
-                            <Typography variant={'body1'}>
-                                {item['what-to-do']}
-                            </Typography>
-                            <br />
-                            <Typography variant={'caption'}>
-                                Por que fazer
-                            </Typography>
-                            <Typography variant={'body1'}>
-                                {item['why-to-do-it']}
-                            </Typography>
-                            <br />
-                            <Typography variant={'caption'}>
-                                Como fazer
-                            </Typography>
-                            <Typography variant={'body1'}>
-                                {item['how-to-do-it']}
-                            </Typography>
-                            <br />
-                            <Typography variant={'caption'}>
-                                Onde fazer
-                            </Typography>
-                            <Typography variant={'body1'}>
-                                {item['where-to-do-it']}
-                            </Typography>
-                            <br />
-                            <Typography variant={'caption'}>
-                                Fazer até
-                            </Typography>
-                            <Typography variant={'body1'}>
-                                {item['until-when']}
-                            </Typography>
-                        </CardContent>
-                    </Card>
+                    <CorrectiveAction
+                        key={item.id}
+                        id={index + 1}
+                        what={item['what-to-do']}
+                        why={item['why-to-do-it']}
+                        how={item['how-to-do-it']}
+                        where={item['where-to-do-it']}
+                        until={item['until-when']}
+                    />
                 )}
             </div>
             <Dialog open={dialogOpen} onClose={toggleDialog} aria-labelledby="form-dialog-title" fullScreen={isMobile}>
