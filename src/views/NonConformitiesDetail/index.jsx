@@ -7,7 +7,7 @@ import { isMobile } from 'react-device-detect';
 
 import CorrectiveAction from '../../components/NonConformitiesDetail/CorrectiveAction';
 
-export default function NonConformity({ history, match }) {
+export default function NonConformitiesDetail({ history, match }) {
 
     const [nonConformity, setNonConformity] = useState(null);
     const [correctiveActions, setCorrectiveActions] = useState([]);

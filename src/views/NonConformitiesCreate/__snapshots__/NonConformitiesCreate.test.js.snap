@@ -21,6 +21,7 @@ Object {
       </button>
       <div>
         <form
+          data-testid="new-noncorformity-form"
           id="new-nonconformity-form"
         >
           <div
@@ -48,7 +49,7 @@ Object {
                     class="MuiInputBase-input MuiOutlinedInput-input"
                     data-testid="new-nonconformity-ocurrence-date"
                     type="date"
-                    value="2020-03-06"
+                    value="2020-03-08"
                   />
                   <fieldset
                     aria-hidden="true"
@@ -139,6 +140,7 @@ Object {
     </button>
     <div>
       <form
+        data-testid="new-noncorformity-form"
         id="new-nonconformity-form"
       >
         <div
@@ -166,7 +168,7 @@ Object {
                   class="MuiInputBase-input MuiOutlinedInput-input"
                   data-testid="new-nonconformity-ocurrence-date"
                   type="date"
-                  value="2020-03-06"
+                  value="2020-03-08"
                 />
                 <fieldset
                   aria-hidden="true"

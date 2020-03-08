@@ -5,7 +5,7 @@ import dateFormat from 'dateformat';
 
 import { TextField, FormGroup, FormControlLabel, Checkbox, Button, Card, CardContent } from '@material-ui/core';
 
-export default function NewNonConformity({ history }) {
+export default function NonConformityCreate({ history }) {
 
     const [departments, setDepartments] = useState([]);
     const [description, setDescription] = useState('');
@@ -75,7 +75,7 @@ export default function NewNonConformity({ history }) {
         <>
             <Button onClick={() => { history.push('/nonconformities') }} variant="contained" color="primary">Voltar</Button>
             <div>
-                <form id='new-nonconformity-form' onSubmit={handleSubmit}>
+                <form id='new-nonconformity-form' onSubmit={handleSubmit} data-testid={'new-noncorformity-form'}>
                     <Card style={{ marginTop: 16 }}>
                         <CardContent>
                             <TextField
@@ -110,9 +110,9 @@ export default function NewNonConformity({ history }) {
                                 {departments.map((item, index) =>
                                     <FormControlLabel
                                         key={item.id}
+                                        data-testid={`new-nonconformity-checkbox-${index}`}
                                         control={
                                             <Checkbox
-                                                data-testid={`new-nonconformity-checkbox-${index}`}
                                                 checked={item.isChecked || false}
                                                 onChange={e => handleDepartmentCheckbox(e, item.id)}
                                             />
