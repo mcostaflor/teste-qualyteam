@@ -1,19 +1,19 @@
 import { render, cleanup, waitForElement, fireEvent, getByText } from '@testing-library/react'
 
 import NonConformitiesCreate from './index';
-import { renderApp } from '../../helpers/tests/renderApp';
+import renderApp from '../../helpers/tests/renderApp';
 
 afterEach(cleanup);
 
 describe('Testing new non conformity submit view', () => {
 
     it("renders", async () => {
-        const page = render(renderApp(NonConformitiesCreate));
+        const page = render(renderApp(NonConformitiesCreate, '/nonconformities/new', '/nonconformities/new'));
         expect(page).toMatchSnapshot();
     });
 
     it("loads departments", async () => {
-        const { getByTestId } = render(renderApp(NonConformitiesCreate));
+        const { getByTestId } = render(renderApp(NonConformitiesCreate, '/nonconformities/new', '/nonconformities/new', {}));
         const checkbox = await waitForElement(
             () => getByTestId('new-nonconformity-checkbox-0')
         )
@@ -22,7 +22,7 @@ describe('Testing new non conformity submit view', () => {
 
     it("sends the nonconformity data", async () => {
 
-        const { getByTestId, getByText } = render(renderApp(NonConformitiesCreate));
+        const { getByTestId, getByText } = render(renderApp(NonConformitiesCreate, '/nonconformities/new', '/nonconformities/new'));
         const description = getByTestId('new-nonconformity-description');
         const ocurrenceDate = getByTestId('new-nonconformity-ocurrence-date');
         const checkbox = await waitForElement(
@@ -48,13 +48,13 @@ describe('Testing new non conformity submit view', () => {
 
         fireEvent.click(submitButton);
 
-
-        // history.push no componente retornando erro, cai no catch e dispara uma snackbar com a mensagem de não criado.
         const snackbar = await waitForElement(
-            () => getByText('Não criado.')
+            () => getByText('Não conformidade criada com sucesso')
         )
 
         expect(snackbar).toBeDefined();
+
+        expect(history.location)
 
     });
 

@@ -9,7 +9,7 @@ import CorrectiveAction from '../../components/NonConformitiesDetail/CorrectiveA
 
 export default function NonConformitiesDetail({ history, match }) {
 
-    const [nonConformity, setNonConformity] = useState(null);
+    const [nonConformity, setNonConformity] = useState({});
     const [correctiveActions, setCorrectiveActions] = useState([]);
 
     const [dialogOpen, setDialogOpen] = useState(false);
@@ -26,7 +26,7 @@ export default function NonConformitiesDetail({ history, match }) {
         async function fetchNonConformity() {
             setNonConformity(await nonConformitiesApi.getOne(match.params.id));
         }
-
+        console.log(match.params.id)
         fetchNonConformity();
     }, [match.params.id]);
 
@@ -36,7 +36,7 @@ export default function NonConformitiesDetail({ history, match }) {
             setCorrectiveActions(await correctiveActionsApi.getAllFromId(nonConformity['corrective-actions']));
         }
 
-        if (nonConformity)
+        if (nonConformity.id)
             fetchCorrectiveActions();
 
     }, [nonConformity])
@@ -108,9 +108,6 @@ export default function NonConformitiesDetail({ history, match }) {
 
     }
 
-    if (!nonConformity)
-        return null;
-
     return (
         <>
             <Button variant={'contained'} color={'primary'} onClick={() => history.push('/nonconformities')}>
@@ -136,7 +133,7 @@ export default function NonConformitiesDetail({ history, match }) {
                     )}
                 </CardContent>
             </Card>
-            <Button variant={'contained'} color={'primary'} onClick={toggleDialog} style={{ marginTop: 20 }}>
+            <Button variant={'contained'} color={'primary'} onClick={toggleDialog} style={{ marginTop: 20 }} data-testid={'new-correctiveaction-open-dialog'}>
                 Nova ação
             </Button>
             <div>
