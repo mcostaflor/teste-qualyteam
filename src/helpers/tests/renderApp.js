@@ -6,7 +6,6 @@ import { SnackbarProvider } from 'notistack';
 import { Router, Route, Switch } from 'react-router-dom';
 
 export default (Component, path, route, props) => {
-    console.log(path)
     const history = createMemoryHistory({ initialEntries: [route] });
     return (
         <Router history={history}>

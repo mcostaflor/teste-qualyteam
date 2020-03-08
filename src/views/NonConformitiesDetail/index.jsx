@@ -26,7 +26,6 @@ export default function NonConformitiesDetail({ history, match }) {
         async function fetchNonConformity() {
             setNonConformity(await nonConformitiesApi.getOne(match.params.id));
         }
-        console.log(match.params.id)
         fetchNonConformity();
     }, [match.params.id]);
 
@@ -92,15 +91,13 @@ export default function NonConformitiesDetail({ history, match }) {
                 'until-when': dateFormat(untilInput + 'T00:00:00', 'dd-mm-yyyy')
             });
 
-
             setNonConformity(await nonConformitiesApi.editOne(nonConformity.id, {
-                ...nonConformity,
                 'corrective-actions': [...nonConformity['corrective-actions'], created.id]
             }));
 
             toggleDialog();
-            enqueueSnackbar('Ação criada com succeso.', { variant: 'success' });
             clearForm();
+            enqueueSnackbar('Ação criada com succeso.', { variant: 'success' });
 
         } catch (e) {
             enqueueSnackbar('Ação não pode ser criada. Tente novamente.', { variant: 'error' });
@@ -164,6 +161,9 @@ export default function NonConformitiesDetail({ history, match }) {
                             fullWidth
                             value={whatInput}
                             onChange={e => setWhatInput(e.target.value)}
+                            inputProps={{
+                                'data-testid':'new-correctiveaction-whatinput'
+                            }}
                         />
                         <TextField
                             margin="dense"
@@ -175,6 +175,9 @@ export default function NonConformitiesDetail({ history, match }) {
                             fullWidth
                             value={whyInput}
                             onChange={e => setWhyInput(e.target.value)}
+                            inputProps={{
+                                'data-testid':'new-correctiveaction-whyinput'
+                            }}
                         />
                         <TextField
                             margin="dense"
@@ -186,6 +189,9 @@ export default function NonConformitiesDetail({ history, match }) {
                             fullWidth
                             value={howInput}
                             onChange={e => setHowInput(e.target.value)}
+                            inputProps={{
+                                'data-testid':'new-correctiveaction-howinput'
+                            }}
                         />
                         <TextField
                             margin="dense"
@@ -197,6 +203,9 @@ export default function NonConformitiesDetail({ history, match }) {
                             fullWidth
                             value={whereInput}
                             onChange={e => setWhereInput(e.target.value)}
+                            inputProps={{
+                                'data-testid':'new-correctiveaction-whereinput'
+                            }}
                         />
                         <TextField
                             margin="dense"
@@ -205,10 +214,13 @@ export default function NonConformitiesDetail({ history, match }) {
                             variant={'outlined'}
                             value={untilInput}
                             onChange={e => setUntilInput(e.target.value)}
+                            inputProps={{
+                                'data-testid':'new-correctiveaction-untilinput'
+                            }}
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button color="primary" type={'submit'}>
+                        <Button color="primary" type={'submit'} data-testid={'new-correctiveaction-submit'}>
                             Enviar
                         </Button>
                         <Button color="primary" onClick={clearForm}>
