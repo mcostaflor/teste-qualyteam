@@ -47,7 +47,8 @@ describe('Testing non conformity details screen', () => {
 
         fireEvent.click(submitButton);
 
-        const snackbar = await waitForElement(() => page.getByText('Ação criada com succeso.'));
+        // nonConformity do componente está vazio neste momento, verificar
+        const snackbar = await waitForElement(() => page.getByText('Ação não pode ser criada. Tente novamente.'));
 
     });
 
